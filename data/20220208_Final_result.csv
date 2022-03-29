@@ -1,4 +1,4 @@
-Immoweb ID,Property type,property sub-type,Price,Post code,Building condition,Kitchen type,Bedrooms,Furnished,Terrace surface,Tenement building,Number of frontages,Swimming pool,How many fireplaces?,Garden,Terrace,Surface of the plot,Living area,Garden surface,Garden orientation
+Immoweb ID,Property type,property sub-type,Price,Post code,Building condition,Kitchen type,Bedrooms,Furnished,terrace_area,Tenement building,Number of frontages,Swimming pool,How many fireplaces?,Garden,Terrace,Surface of the plot,Living area,garden_area,Garden orientation
 9729720,APARTMENT,PENTHOUSE,179000,1140,Good,Semi equipped,1,Yes,9,No,,,,,,,63,,
 9729785,APARTMENT,PENTHOUSE,255000,8370,Good,Installed,1,Yes,46,No,2,,,,,,42,,
 9729784,APARTMENT,PENTHOUSE,255000,8370,Good,Installed,1,Yes,46,No,2,,,,,,42,,
