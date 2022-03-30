@@ -1,36 +1,25 @@
 import pandas as pd
 import numpy as np
 from sklearn.linear_model import LinearRegression
-from statsmodels.stats.outliers_influence import variance_inflation_factor
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import mean_squared_error as MSE
 from sklearn.metrics import r2_score
 import joblib
 
-
-class Model():
-    
+"""
+class Model:
     def __init__(self):
-        self.df = pd.read_csv('data/20220208_Final_result.csv')
-
+        self.df = pd.read_csv("data/data_deployment.csv")
 
     def data_cleaning(self) -> pd.DataFrame:
-        """This function cleans the data for machine learning model"""
+        #This function cleans the data for machine learning model
 
         df = self.df
 
         # changing the datatype of Price column to numeric
-        df = df[pd.to_numeric(df["Price"], errors="coerce").notnull()]
-        df = df.astype({"Price": float}, errors="raise")
-
-        # dropping dublicates base on the Immoweb ID as those ID's should be unique
-        df = df.drop_duplicates(["Immoweb ID"], keep="last")
-
-        # dropping columns which will not be used in ml model
-        df = df.drop(
-            columns=["Tenement building", "How many fireplaces?", "Garden orientation"]
-        )
+        df = df[pd.to_numeric(df["price"], errors="coerce").notnull()]
+        df = df.astype({"price": float}, errors="raise")
 
         building_condition_map = {
             "As new": 6,
@@ -41,10 +30,12 @@ class Model():
             "To restore": 1,
         }
         df = df.applymap(
-            lambda s: building_condition_map.get(s) if s in building_condition_map else s
+            lambda s: building_condition_map.get(s)
+            if s in building_condition_map
+            else s
         )
-        df["Building condition"] = df["Building condition"].fillna(2)
-        print(df["Building condition"].isnull().sum())
+        df["building_condition"] = df["building_condition"].fillna(2)
+        print(df["building_condition"].isnull().sum())
 
         Kit_type_dict = {
             "USA uninstalled": 0,
@@ -58,44 +49,47 @@ class Model():
         }
 
         df = df.replace(Kit_type_dict)
-        df["Kitchen type"] = df["Kitchen type"].fillna(0)
-        
-        df["Furnished"] = df["Furnished"].fillna("No")
-        df["Furnished"] = df["Furnished"].apply(lambda v: 0 if v == "No" else 1)
+        df["kitchen_type"] = df["kitchen_type"].fillna(0)
 
-        df["Bedrooms"] = df["Bedrooms"].fillna(2).astype(int)
+        df["bedrooms"] = df["bedrooms"].fillna(2).astype(int)
 
         # Fill missing values with value 0
-        df["Swimming pool"].fillna(0, inplace=True)
-        df["Swimming pool"] = df["Swimming pool"].apply(lambda v: 0 if v == "No" else 1)
-        df["Swimming pool"].isnull().sum()
+        df["swimming_pool"].fillna(0, inplace=True)
+        df["swimming_pool"] = df["swimming_pool"].apply(lambda v: 0 if v == "No" else 1)
+        df["swimming_pool"].isnull().sum()
 
         # Fill empty values with 0 all missing values correspond to the Apartement
-        df["Surface of the plot"].fillna(0, inplace=True)
-
+        df["surface_plot"].fillna(0, inplace=True)
 
         # get ['number of frontages'] with values and calc mean
-        selected_rows = df[~df["Number of frontages"].isnull()]
-        mean_num_of_frontages = selected_rows["Number of frontages"].mean(axis=0).round(0)
+        selected_rows = df[~df["number of frontages"].isnull()]
+        mean_num_of_frontages = (
+            selected_rows["Number of frontages"].mean(axis=0).round(0)
+        )
         mean_num_of_frontages
 
         # fill mean value to missing value
-        df["Number of frontages"] = df["Number of frontages"].fillna(mean_num_of_frontages)
+        df["Number of frontages"] = df["Number of frontages"].fillna(
+            mean_num_of_frontages
+        )
         # changing data type as int
         df["Number of frontages"] = df["Number of frontages"].astype(int)
 
-
         ## Garden/Garden Surface & Terrace/Surface
 
-        df.loc[df.Garden == 1, "garden_area" ] = df.loc[df.Garden == 1, "garden_area"].fillna(df['garden_area'].median())
-        df.loc[df.Garden == 0, "garden_area" ] = df.loc[df.Garden == 0, "garden_area"].fillna(0)
+        df.loc[df.Garden == 1, "garden_area"] = df.loc[
+            df.Garden == 1, "garden_area"
+        ].fillna(df["garden_area"].median())
+        df.loc[df.Garden == 0, "garden_area"] = df.loc[
+            df.Garden == 0, "garden_area"
+        ].fillna(0)
 
-        df.loc[df.Terrace == 1, "terrace_area" ] = df.loc[df.Terrace == 1, "terrace_area"].fillna(df['terrace_area'].median())
-        df.loc[df.Garden == 0, "terrace_area" ] = df.loc[df.Terrace == 0, "terrace_area"].fillna(0)
-        # As it was mentioned before these columns will not be used for further analysis
-        df = df.drop(columns=["garden_area", "terrace_area"])
-
-        df.drop(["Furnished"], axis=1)
+        df.loc[df.Terrace == 1, "terrace_area"] = df.loc[
+            df.Terrace == 1, "terrace_area"
+        ].fillna(df["terrace_area"].median())
+        df.loc[df.Garden == 0, "terrace_area"] = df.loc[
+            df.Terrace == 0, "terrace_area"
+        ].fillna(0)
 
         ### Dealing with Outliers
 
@@ -112,10 +106,8 @@ class Model():
 
         #### Surface of the plot
 
-
         q = data_2["Surface of the plot"].quantile(0.99)
         data_3 = data_2[data_2["Surface of the plot"] < q]
-
 
         #### Number of frontages
 
@@ -134,32 +126,31 @@ class Model():
         data_cleaned["log_price"] = data_cleaned["Price"].map(np.log)
         data_cleaned
 
-        data_cleaned['log_price'].max()
-        data_cleaned = data_cleaned.drop(["Price", 'Living area'], axis=1)
-        data_no_multicollinearity = data_cleaned.drop(
-            ["Number of frontages", "Building condition"], axis=1
-        )
+        data_cleaned["log_price"].max()
+        data_cleaned = data_cleaned.drop(["Price", "Living area"], axis=1)
+        df = data_cleaned.drop(
+        ["Number of frontages", "Building condition", "garden_area", "terrace_area"], axis=1)
+
         ### Categorical data encoding
-        data_no_multicollinearity["Post code"].astype(str)
-        post_code_stat = data_no_multicollinearity["Post code"].value_counts(ascending=False)
-        pc_stat_less_10 = post_code_stat[post_code_stat <= 10]
-        data_post_code = data_no_multicollinearity.copy()
-        data_post_code["Post code"] = data_no_multicollinearity["Post code"].apply(
-            lambda x: "other" if x in pc_stat_less_10 else x
-        )
-        len(data_post_code["Post code"].unique())
-        data_no_pro_type = data_post_code.drop(
-            columns=["Immoweb ID", "Property type"]
-        )
-        data_with_dummies = pd.get_dummies(data_no_pro_type, drop_first=True)
+        # data_no_multicollinearity["Post code"].astype(str)
+        # post_code_stat = data_no_multicollinearity["Post code"].value_counts(ascending=False)
+        # pc_stat_less_10 = post_code_stat[post_code_stat <= 10]
+        # data_post_code = data_no_multicollinearity.copy()
+        # data_post_code["Post code"] = data_no_multicollinearity["Post code"].apply(
+        #    lambda x: "other" if x in pc_stat_less_10 else x
+        # )
+        # len(data_post_code["Post code"].unique())
+
+        data_with_dummies = pd.get_dummies(df, drop_first=True)
         df = data_with_dummies
+        print(df.columns.to_list())
+        print(df.isnull().sum().sort_values(ascending=0))
 
         return df
 
-    
     def create_model(self):
-        """ This function creates a Linear Regression Model for prediction"""
-        
+        #This function creates a Linear Regression Model for prediction
+
         self.df = self.data_cleaning()
         df = self.df
         # Declare the features and targets
@@ -202,12 +193,17 @@ class Model():
         print("RMSE is {}".format(rmse))
         print("R2 score is {}".format(r2))
 
-        joblib.dump(regressor, 'model/model.pkl')
+        joblib.dump(regressor, "model/model.pkl")
 
-        model_columns =list(df.columns)
+        model_columns = list(X.columns)
 
-        joblib.dump(model_columns, 'model/model_columns.pkl')
+        joblib.dump(model_columns, "model/model_columns.pkl")
+        print(X.columns)
+
 
 regression = Model()
 regression.data_cleaning()
-regression.create_model()
+regression.create_model()"""
+
+df = pd.read_csv('data/data_model.csv')
+print(df['kitchen_type'].dtype)
