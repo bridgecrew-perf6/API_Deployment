@@ -6,4 +6,6 @@ COPY . /app
 
 RUN rm -rf /app/env
 
-CMD python app.py
+RUN pip3 install -r requirement.txt
+
+CMD python3 app.py
