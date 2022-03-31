@@ -1,14 +1,16 @@
 import pickle
 import pandas as pd
 import numpy as np
+import json
+import joblib
 
-def prediction(preprocessed_data):
-    
-    model = pickle.load('model/model.pkl')
+model = joblib.load("model/model.pkl")
 
-    price_log = model.predict(preprocessed_data)[0]
-    price = round(np.exp(price_log), 2)
 
-    return price
+def predict(df):
 
-    
+
+    prediction = model.predict(df.to_numpy())[0]
+    price = round(np.exp(prediction), 2)
+
+    return prediction

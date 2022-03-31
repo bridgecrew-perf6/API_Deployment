@@ -1,9 +1,10 @@
 import pickle
+import joblib
 import pandas as pd
+import json
 
 
-def preprocess(json_data):
-
+def preprocess(data_input):
     expected_outcome = {
         "postcode": {"type": int, "optional": False},
         "kitchen_type": {
@@ -19,42 +20,39 @@ def preprocess(json_data):
         "property_type": {
             "type": str,
             "optional": False,
-            "default": ["Apartment", "House"],
+            "default": ["APARTMENT", "HOUSE"],
         },
     }
 
     for key in expected_outcome.keys():
-        if expected_outcome[key]['optional']:
-            if key not in json_data.keys():
-                continue
-            raise ValueError(f'Expected feature {key} is missing. Please ')
+        if not expected_outcome[key]['optional']:
+            if key not in data_input["data"].keys():
+                raise ValueError(f'Expected feature {key} is missing')
 
-    for key, value in json_data.items():
+    for key, value in data_input["data"].items():
         if key not in expected_outcome.keys():
             raise ValueError(f'This feature {key} is not available for this model')
         if type(value) != expected_outcome[key]['type']:
             raise ValueError(f'{key}:{value} should be {expected_outcome[key]["type"]}')
-        if expected_outcome['type'] == str and len(expected_outcome['type'])>0:
+        if expected_outcome[key]['type'] == str and len(expected_outcome[key]['default'])>0:
             if value not in expected_outcome[key]['default']:
                 raise ValueError(f'Chosen value is not valid. Please enter a default value from {expected_outcome[key]["default"]}')
         if value == "Not installed":
-            value = float(0)
+            data_input['data'][key] = float(0)
         if value == "Semi equipped":
-            value = float(1)
+            data_input['data'][key] = float(1)
         if value == "Equipped":
-            value = float(2)
+            data_input['data'][key] = float(2)
         if value == "Yes":
-            value = 1
+            data_input['data'][key] = 1
         if value == "No":
-            value = 0
+            data_input['data'][key] = 0
 
-    df = pd.DataFrame(json_data[expected_outcome], index=0)
 
-    df = pd.get_dummies(df)
-
-    model_columns = pickle.load(open('model/model_columns.pkl'), 'rb')
-
-    df = df.reindex(columns=model_columns, fill_value=0)
-
-    return df
+    model_columns = pickle.load(open('model/model_columns.pkl', 'rb'))
+    df = pd.DataFrame(data_input)
+    df = df.T
+    df = pd.get_dummies(df, columns=['property_type'])
+    
+    return df.reindex(columns=model_columns, fill_value=0)
 
