@@ -1,12 +1,13 @@
 import pickle
 import joblib
 import pandas as pd
+import numpy as np
 import json
 
 
 def preprocess(data_input):
     expected_outcome = {
-        "postcode": {"type": int, "optional": False},
+        "postcode": {"type": str, "optional": False},
         "kitchen_type": {
             "type": str,
             "optional": True,
@@ -53,6 +54,7 @@ def preprocess(data_input):
     df = pd.DataFrame(data_input)
     df = df.T
     df = pd.get_dummies(df, columns=['property_type'])
+    df['living_area'] = np.exp(df["living_area"])
     
     return df.reindex(columns=model_columns, fill_value=0)
 

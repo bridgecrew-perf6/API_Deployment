@@ -13,4 +13,4 @@ def predict(df):
     prediction = model.predict(df.to_numpy())[0]
     price = round(np.exp(prediction), 2)
 
-    return prediction
+    return price
