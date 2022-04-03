@@ -1,2 +1,2 @@
 # API_Deployment
-API deploylent for house price prediction
+API deployment for house price prediction
