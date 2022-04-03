@@ -1,0 +1,68 @@
+{
+    "data": {
+        "postcode": {
+            "type": "[int]",
+            "optional": "[False]"
+        },
+        "kitchen_type": {
+            "type": "[str]",
+            "optional": "[True]",
+            "default": [
+                "Installed",
+                "Semi equipped",
+                "Equipped"
+            ]
+        },
+        "bedroom": {
+            "type": "[int]",
+            "optional": "[False]",
+            "default": []
+        },
+        "building_condition": {
+            "type": "[str]",
+            "optional": "[False]",
+            "default": [
+                "As new",
+                "Just renovated",
+                "Good",
+                "To be done up",
+                "To renovate",
+                "To restore"
+            ]
+        },
+        "furnished": {
+            "type": "[bool]",
+            "optional": "[True]",
+            "default": []
+        },
+        "terrace": {
+            "type": "[bool]",
+            "optional": "[True]",
+            "default": []
+        },
+        "garden": {
+            "type": "[bool]",
+            "optional": "[True]",
+            "default": []
+        },
+        "surface_plot": {
+            "type": "[float, int]",
+            "optional": "[True]",
+            "default": [
+                "None"
+            ]
+        },
+        "living_area": {
+            "type": "[float, int]",
+            "optional": "[False]"
+        },
+        "property-type": {
+            "type": "[str]",
+            "optional": "[False]",
+            "default": [
+                "APARTMENT",
+                "HOUSE"
+            ]
+        }
+    }
+}

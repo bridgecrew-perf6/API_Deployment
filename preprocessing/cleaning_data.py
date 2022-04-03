@@ -1,60 +1,41 @@
 import pickle
-import joblib
 import pandas as pd
 import numpy as np
-import json
+import pgeocode
 
 
 def preprocess(data_input):
-    expected_outcome = {
-        "postcode": {"type": str, "optional": False},
-        "kitchen_type": {
-            "type": str,
-            "optional": True,
-            "default": ["Not installed", "Semi equipped",
-                "Equipped"],
-        },
-        "bedroom": {"type": int, "optional": False, "default": []},
-        "swimming_pool": {"type": str, "optional": True, "default": ["Yes", "No"]},
-        "surface_plot": {"type": int, "optional": True, "default": []},
-        "living_area": {"type": int, "optional": False, "default": []},
-        "property_type": {
-            "type": str,
-            "optional": False,
-            "default": ["APARTMENT", "HOUSE"],
-        },
+
+    build_cond_map = {
+        "As new": 6,
+        "Just renovated": 5,
+        "Good": 4,
+        "To be done up": 3,
+        "To renovate": 2,
+        "To restore": 1,
     }
+    kitchen_type_map = {"Not installed": 0, "Semi equipped": 1, "Equipped": 2}
+    for key, value in data_input.items():
+        for k, v in build_cond_map.items():
+            if value == k:
+                data_input[key] = v
+        for type, num in kitchen_type_map.items():
+            if value == type:
+                data_input[key] = num
 
-    for key in expected_outcome.keys():
-        if not expected_outcome[key]['optional']:
-            if key not in data_input["data"].keys():
-                raise ValueError(f'Expected feature {key} is missing')
+    df = pd.DataFrame(data_input, index=[0])
+    df.replace(to_replace="Yes", value=1, inplace=True)
+    df.replace(to_replace="No", value=0, inplace=True)
+    df["living_area"] = df["living_area"].astype(int)
+    df["bedroom"] = df["bedroom"].astype(int)
+    df["surface_plot"] = df["surface_plot"].astype(int)
 
-    for key, value in data_input["data"].items():
-        if key not in expected_outcome.keys():
-            raise ValueError(f'This feature {key} is not available for this model')
-        if type(value) != expected_outcome[key]['type']:
-            raise ValueError(f'{key}:{value} should be {expected_outcome[key]["type"]}')
-        if expected_outcome[key]['type'] == str and len(expected_outcome[key]['default'])>0:
-            if value not in expected_outcome[key]['default']:
-                raise ValueError(f'Chosen value is not valid. Please enter a default value from {expected_outcome[key]["default"]}')
-        if value == "Not installed":
-            data_input['data'][key] = float(0)
-        if value == "Semi equipped":
-            data_input['data'][key] = float(1)
-        if value == "Equipped":
-            data_input['data'][key] = float(2)
-        if value == "Yes":
-            data_input['data'][key] = 1
-        if value == "No":
-            data_input['data'][key] = 0
+    df["living_area"] = df["living_area"].map(np.log)
+    nomi = pgeocode.Nominatim("be")
+    df["city"] = nomi.query_postal_code(df["postcode"])["community_name"]
+    df.drop(columns=["postcode"])
+    df = pd.get_dummies(df, columns=["property_type", "city"])
+    model_columns = pickle.load(open("model/model_columns.pkl", "rb"))
+    df = df.reindex(columns=model_columns, fill_value=0)
 
-
-    model_columns = pickle.load(open('model/model_columns.pkl', 'rb'))
-    df = pd.DataFrame(data_input)
-    df = df.T
-    df = pd.get_dummies(df, columns=['property_type'])
-    df['living_area'] = np.exp(df["living_area"])
-    
-    return df.reindex(columns=model_columns, fill_value=0)
-
+    return df
