@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset='utf-8'>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width">
+  <title>API Real-Estate Prediction | Based on CodyHouse Template</title>
+</head>
+<body style="background-color:wheat;">
+<header class="cd-header flex flex-column flex-center">
+  <div class="text-component text-center">
+    <h1>API Real-Estate Prediction </h1>
+    <p><a class="cd-article-link" href="https://github.com/dilsadozbrk?tab=repositories">View GitHub</a></p>
+  </div>
+</header>
+
+<section class="cd-faq js-cd-faq container max-width-md margin-top-lg margin-bottom-lg">
+	<ul class="cd-faq__categories">
+		<li><a class="cd-faq__category cd-faq__category-selected truncate" href="#Introduction">Introduction</a></li>
+		<li><a class="cd-faq__category truncate" href="#API Use">API Use</a></li>
+		<li><a class="cd-faq__category truncate" href="#Prediction">Prediction</a></li>
+	</ul> <!-- cd-faq__categories -->
+
+	<div class="cd-faq__items">
+		<ul id="Introduction" class="cd-faq__group">
+			<li class="cd-faq__title"><h2>Introduction</h2></li>
+			<li class="cd-faq__item">
+				<div class="cd-faq__content">
+          <div class="text-component">
+            <p>Welcome! This Webpage provides information regarding the use of the API. This API provides a price prediction for a given property with the help of machine learning model. </p>
+		  </div>
+				</div> <!-- cd-faq__content -->
+			</li>
+		</ul> <!-- cd-faq__group -->
+
+		<ul id="API Use" class="cd-faq__group">
+			<li class="cd-faq__title"><h2>API</h2></li>
+						<li class="cd-faq__item">
+				<a class="cd-faq__trigger" href="#0"><span>How do I use this API?</span></a>
+				<div class="cd-faq__content">
+          <div class="text-component">
+            <p>You can use this API with a POST request to send a JSON object with all the required fields
+				and their respective values. Please make sure that you accomplish all the requirements before sending your request(all string values are<i>case sensitive</i>). You can find all requirements
+				<a href="https://realestate-prediction-dilsad.herokuapp.com/predict">here.</a><br><br>
+
+            <p> This API is built with Flask. Pydantic library is checking if the POST parameters are given correctly and provide an error message to the user with pointing the issue.<br>
+          <div style="text-align: center;">  {<br>
+    "errors": {<br>
+        "building_condition": "unexpected value; permitted: 'As new', 'Just renovated', <br>'Good', 'To be done up', 'To renovate', 'To restore'"
+    },<br>
+    "prediction": null<br>
+}<br><br></div>
+					If your request meets all the requirements you will receive a predicted price for the given property like below example.<br>
+				<div style="text-align: center;">	{<br>
+    "error": null,<br>
+    "prediction": 316797.85<br>
+}				</p></div>
+          </div>
+				</div> <!-- cd-faq__content -->
+			</li>
+		</ul> <!-- cd-faq__group -->
+
+		<ul id="Prediction" class="cd-faq__group">
+			<li class="cd-faq__title"><h2>Prediction Process</h2></li>
+						<li class="cd-faq__item">
+				<a class="cd-faq__trigger" href="#0"><span>Data Source</span></a>
+				<div class="cd-faq__content">
+          <div class="text-component">
+			<p> Data to train a machine learning model was from Immoweb in February with BeautifulSoup library. 
+				</p>
+		  </div>
+				</div> <!-- cd-faq__content -->
+			</li>
+
+			<li class="cd-faq__item">
+				<a class="cd-faq__trigger" href="#0"><span>Machine Learning Model</span></a>
+				<div class="cd-faq__content">
+          <div class="text-component">
+            <p> As a first step data set was cleaned and we decided to choose certain features which seemed to be
+				most correlated with the price. 
+				<br> <br>
+					The second step all categorical values were converted to numerical values. After that Linear Regression model was selected and trained.
+			</p>
+          </div>
+				</div> <!-- cd-faq__content -->
+			</li>
+
+			<li class="cd-faq__item">
+				<a class="cd-faq__trigger" href="#0"><span>How good is the model?</span></a>
+				<div class="cd-faq__content">
+          <div class="text-component">
+            <p> Unfortunately, the prediction is not that accurate at this moment. The predicted price is in acceptable
+				range and kind of make sense but for the luxury houses our model makes so many mistakes. On a more technical level, the R2 score is about 0.73.</p>
+            </div>
+				</div> <!-- cd-faq__content -->
+			</li>
+
+		</ul> <!-- cd-faq__group -->
+	</div> <!-- cd-faq__items -->
+
+	<a href="#0" class="cd-faq__close-panel text-replace">Close</a>
+  
+  <div class="cd-faq__overlay" aria-hidden="true"></div>
+</section> <!-- cd-faq -->
+</body>
+</html>

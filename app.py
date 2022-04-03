@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 import json
 import os
 import pandas as pd
@@ -10,9 +10,9 @@ app = Flask(__name__)
 
 
 @app.route("/", methods=["GET"])
-def check_api():
-    """Checks if the server is alive"""
-    return "Alive!!!"
+def home():
+    """Display API documentation"""
+    return render_template("home.html")
 
 
 @app.route("/predict", methods=["GET"])
@@ -27,9 +27,9 @@ def input_format():
 
 @app.route("/predict", methods=["POST"])
 def respond():
-    json_ = request.get_json().get('data')
+    json_ = request.get_json().get("data")
     validation = input_validator(json_)
-    if validation == "Excellent!":    
+    if validation == "Excellent!":
         prediction_df = preprocess(json_)
         price = predict(prediction_df)
         return jsonify({"prediction": price, "error": None}), 200
@@ -38,5 +38,5 @@ def respond():
 
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5001))
+    port = int(os.environ.get("PORT", 5000))
     app.run(debug=False, host="0.0.0.0", threaded=True, port=port)
