@@ -51,12 +51,12 @@ python app.py
  ## End Points 
  
  1. /(GET):<br>
-        GET request and returns an [API documentation](https://realestate-prediction-dilsad.herokuapp.com/) on  Heroku.<br>
+    GET request and returns an [API documentation](https://realestate-prediction-dilsad.herokuapp.com/) on  Heroku.<br>
      
  2. /predict(GET):<br>
-        GET request returning a [JSON file](https://realestate-prediction-dilsad.herokuapp.com/predict) which shows the expected user input format.<br>              
+    GET request returning a [JSON file](https://realestate-prediction-dilsad.herokuapp.com/predict) which shows the expected user input format.<br>              
  3. /predict(POST)
-        POST request that receives the data of a house in JSON format.
+    POST request that receives the data of a house in JSON format.
         
         {
          "data": {"postcode": 1000, "kitchen_type": "Installed", "bedroom": 3, "building_condition": "As new", "furnished": "No",
@@ -65,11 +65,9 @@ python app.py
         
  #### Sample output for error
         {
-         "errors": {
-         "kitchen_type": "unexpected value; permitted: 'Not installed', 'Semi equipped', 'Equipped'"
-        },
+        "errors": {"kitchen_type": "unexpected value; permitted: 'Not installed', 'Semi equipped', 'Equipped'"},
          "prediction": null
-        }
+         }
         
  #### Sample output for prediction
        {
