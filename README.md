@@ -1,7 +1,7 @@
 # API_Deployment
-This API provides predictions from a machine learning model for the real estates in Belgium. Once the app runs the model returns the predicted price based on given features.
+This API provides predictions from a machine learning model for the real estates in Belgium. Once the app runs the model returns the predicted price based on given features. 
 
-The model is also deployed in Heroku in order to be used by web-devolopers to create website around it.
+The program was written in Python 3.9. and deployed in Heroku in order to be used by web-devolopers to create website around it.
 
 ## Project Guidelines
 
@@ -42,4 +42,17 @@ The model is also deployed in Heroku in order to be used by web-devolopers to cr
     The route ('/predict') accepts:<br><br>
         POST request that receives the data of a house in JSON format.<br>
         GET request returning a [JSON file](https://realestate-prediction-dilsad.herokuapp.com/predict) which shows the expected user input format.
+        
+## Dependencies
+-Flask==2.1.0
+-joblib==1.1.0
+-numpy==1.22.2
+-pandas==1.4.1
+-sklearn==0.0
+-pgeocode==0.3.0
+-pydantic==1.9.0
+
+```
+pip install -r requirements.txt
+```
 
