@@ -59,8 +59,8 @@ python app.py
     POST request that receives the data of a house in JSON format.
         
         {
-         "data": {"postcode": 1000, "kitchen_type": "Installed", "bedroom": 3, "building_condition": "As new", "furnished": "No",
-         "terrace": "No", "garden": "Yes", "surface_plot": 200, "living_area": 150, "property-type": "APARTMENT"}
+         "data": {"postcode": 1000, "kitchen_type": "Installed", "bedroom": 3, "building_condition": "As new", 
+         "furnished": "No", "terrace": "No", "garden": "Yes", "surface_plot": 200, "living_area": 150, "property-type": "APARTMENT"}
         }
         
  #### Sample output for error
