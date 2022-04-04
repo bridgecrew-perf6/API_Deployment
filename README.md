@@ -50,7 +50,7 @@ python app.py
 
  ## End Points 
  
- 1. /5GET):<br>
+ 1. /(GET):<br>
         GET request and returns an [API documentation](https://realestate-prediction-dilsad.herokuapp.com/) on  Heroku.<br>
      
  2. /predict(GET):<br>
@@ -63,7 +63,7 @@ python app.py
          "terrace": "No", "garden": "Yes", "surface_plot": 200, "living_area": 150, "property-type": "APARTMENT"}
         }
         
- ### Sample output for error
+ #### Sample output for error
         {
          "errors": {
          "kitchen_type": "unexpected value; permitted: 'Not installed', 'Semi equipped', 'Equipped'"
@@ -71,7 +71,7 @@ python app.py
          "prediction": null
         }
         
- ### Sample output for prediction
+ #### Sample output for prediction
        {
         "error": null,
         "prediction": 323069.19
