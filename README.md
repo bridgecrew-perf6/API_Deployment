@@ -57,7 +57,6 @@ pip install -r requirements.txt
     The route ('/predict') accepts:<br><br>
         GET request returning a [JSON file](https://realestate-prediction-dilsad.herokuapp.com/predict) which shows the expected user input format.<br>
         
-        ```
         {
     "data": {
         "postcode": {
@@ -75,6 +74,5 @@ pip install -r requirements.txt
              }
            }
         }
-      ``` 
 
 
