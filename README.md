@@ -21,20 +21,6 @@ The program was written in Python 3.9. and deployed in Heroku in order to be use
 - [X]  [Docker](https://www.docker.com/) : A container platform for rapid app/microservices development and delivery.
 - [X]  [Heroku](https://www.heroku.com/) : A cloud platform that lets developers build, deliver, monitor and scale apps 
 
-        
-## Dependencies
-
-- Flask==2.1.0
-- joblib==1.1.0
-- numpy==1.22.2
-- pandas==1.4.1
-- sklearn==0.0
-- pgeocode==0.3.0
-- pydantic==1.9.0
-
-```
-pip install -r requirements.txt
-```
 
 ## Project Division:
 
@@ -52,15 +38,27 @@ pip install -r requirements.txt
 
 - app.py -->
 > Contains 2 routes. This file creates a Flask API for providing price prediction. It containes 2 routes. Once its run, it receives the user input as JSON data. After that, this data goes through the validadion and preprocessing process and finally it fits the preprocessed data in the presaved model and displays the prediction. <br><br>
-    The route('/') accepts:<br>
+
+## Running API
+```
+pip install -r requirements.txt
+```
+
+```
+python app.py
+```
+
+ ## End Points 
+ 
+  The route('/') accepts:<br>
         GET request and returns an [API documentation](https://realestate-prediction-dilsad.herokuapp.com/) on  Heroku.<br>
-    The route ('/predict') accepts:<br><br>
+  The route ('/predict') accepts:<br><br>
         GET request returning a [JSON file](https://realestate-prediction-dilsad.herokuapp.com/predict) which shows the expected user input format.<br>              
         POST request that receives the data of a house in JSON format.<br>
-        
         {
-    "data": {"postcode": 1000, "kitchen_type": "Installed", "bedroom": 3, "building_condition": "As new", "furnished": "No", "terrace": "No",
-        "garden": "Yes", "surface_plot": 200, "living_area": 150, "property-type": "APARTMENT"}
-}
+    "data": {"postcode": 1000, "kitchen_type": "Installed", "bedroom": 3, "building_condition": "As new", "furnished": "No", 
+    "terrace": "No", "garden": "Yes", "surface_plot": 200, "living_area": 150, "property-type": "APARTMENT"}
+        }
+
 
 
