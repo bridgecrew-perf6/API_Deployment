@@ -35,21 +35,12 @@ The model is also deployed in Heroku in order to be used by web-devolopers to cr
 - prediction -->
 > - prediction.py : It runs our presaved model and provides a prediction for the user input. 
 
-
-
-In your app.py file, create a Flask API that contains:
-
-    A route at / that accept:
-        GET request and return "alive" if the server is alive.
-    A route at /predict that accept:
-        POST request that receives the data of a house in JSON format.
-        GET request returning a string to explain what the POST expect (data and format).
-
-
 - app.py : Contains 2 routes. This file creates a Flask API for providing price prediction. It containes 2 routes. Once its run, it receives the user input as JSON data. After that, this data goes through the validadion and preprocessing process and finally it fits the preprocessed data in the presaved model and displays the prediction. 
-> - the route('/') accepts:
+
+    The route('/') accepts:<br>
         GET request and returns an [API documentation](https://realestate-prediction-dilsad.herokuapp.com/) on  Heroku.
-> - the route ('/predict') accepts:
+        
+    The route ('/predict') accepts:<br>
         POST request that receives the data of a house in JSON format.
         GET request returning a [JSON file](https://realestate-prediction-dilsad.herokuapp.com/predict) which shows the expected user input format.
 
