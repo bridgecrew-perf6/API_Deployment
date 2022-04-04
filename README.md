@@ -45,13 +45,13 @@ The program was written in Python 3.9. and deployed in Heroku in order to be use
         
 ## Dependencies
 
--Flask==2.1.0
--joblib==1.1.0
--numpy==1.22.2
--pandas==1.4.1
--sklearn==0.0
--pgeocode==0.3.0
--pydantic==1.9.0
+- Flask==2.1.0
+- joblib==1.1.0
+- numpy==1.22.2
+- pandas==1.4.1
+- sklearn==0.0
+- pgeocode==0.3.0
+- pydantic==1.9.0
 
 ```
 pip install -r requirements.txt
