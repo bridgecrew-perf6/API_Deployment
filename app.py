@@ -10,6 +10,7 @@ app = Flask(__name__)
 
 
 @app.route("/", methods=["GET"])
+
 def home():
     """Display API documentation"""
     return render_template("home.html")

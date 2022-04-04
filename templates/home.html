@@ -8,10 +8,10 @@
 	<title>API Real Estate Prediction | Based on CodyHouse Template</title>
 </head>
 
-<body style="background-color:wheat;">
+<body style="background-color:moccasin;">
 	<header class="cd-header flex flex-column flex-center">
 		<div class="text-component text-center">
-			<h1>API Real-Estate Prediction </h1>
+			<h1>API Real Estate Prediction </h1>
 			<p><a class="cd-article-link" href="https://github.com/dilsadozbrk?tab=repositories">View GitHub</a></p>
 		</div>
 	</header>
@@ -32,9 +32,10 @@
 				<li class="cd-faq__item">
 					<div class="cd-faq__content">
 						<div class="text-component">
-							<p>Welcome! This Web page provides information regarding the use of this API. The API
-								provides a price prediction for a given property with the help of a machine learning
-								model. </p>
+							<p>Welcome! This web page gives information regarding the use of this API. The API
+								provides predictions from a machine learning model for the real estates in Belgium.
+								model. Once the app runs the model returns the predicted price based on given features.
+							</p>
 						</div>
 					</div> <!-- cd-faq__content -->
 				</li>
@@ -48,7 +49,7 @@
 					<a class="cd-faq__trigger" href="#0"><span>How do I use this API?</span></a>
 					<div class="cd-faq__content">
 						<div class="text-component">
-							<p>You can use this API with a POST request to send a JSON object with all the required
+							<p>You can use this API with a (/predict) POST request to send a JSON object with all the required
 								fields
 								and their respective values. Please make sure that you accomplish all the requirements
 								before sending your request (all string values are<i> case sensitive</i>). You can find
@@ -57,19 +58,19 @@
 
 							<p> This API is built with Flask. Pydantic library is checking if the POST parameters are
 								given correctly and provides an error message to the user with pointing the issue.<br>
-							<div style="text-align: center;"> {<br>
-								"errors": {<br>
-								"building_condition": "unexpected value; permitted: 'As new', 'Just renovated',
-								<br>'Good', 'To be done up', 'To renovate', 'To restore'"
-								},<br>
-								"prediction": null<br>
-								}<br><br></div>
-							If your request meets all the requirements, you will receive a predicted price for the given
-							property like below example.<br>
-							<div style="text-align: center;"> {<br>
-								"error": null,<br>
-								"prediction": 316797.85<br>
-								} </p>
+							<div> {"errors":<br>
+								{"building_condition": "unexpected value; permitted: 'As new', 'Just renovated',
+								'Good', 'To be done up', 'To renovate', 'To restore'},<br>
+								"prediction": null}<br><br>
+							</div>
+							If your request does not meets all the requirements (in below example there is a typo in kitchen_type), you will receive an error message:<br><br>
+							<div> {"errors": {"kitchen_type": "unexpected value; permitted: 'Not installed', 'Semi equipped', 'Equipped'"},<br>
+								"prediction": null}<br><br>
+							</div>
+							Otherwise you will receive a predicted price for the given
+							property like below example.<br><br>
+							<div> {"error": null,<br>
+								"prediction": 316797.85} </p>
 							</div>
 						</div>
 					</div> <!-- cd-faq__content -->
