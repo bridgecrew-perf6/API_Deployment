@@ -56,6 +56,7 @@ pip install -r requirements.txt
         GET request and returns an [API documentation](https://realestate-prediction-dilsad.herokuapp.com/) on  Heroku.<br>
     The route ('/predict') accepts:<br><br>
         GET request returning a [JSON file](https://realestate-prediction-dilsad.herokuapp.com/predict) which shows the expected user input format.<br>
+        
         ```
         {
     "data": {
@@ -74,9 +75,6 @@ pip install -r requirements.txt
              }
            }
         }
-        
       ``` 
-        
-        POST request that receives the data of a house in JSON format.<br>
 
 
