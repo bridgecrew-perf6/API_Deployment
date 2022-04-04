@@ -50,15 +50,18 @@ python app.py
 
  ## End Points 
  
-  The route('/') accepts:<br>
+ 1. The route('/') accepts:<br>
         GET request and returns an [API documentation](https://realestate-prediction-dilsad.herokuapp.com/) on  Heroku.<br>
-  The route ('/predict') accepts:<br><br>
+     
+ 2. The route ('/predict') accepts:<br><br>
         GET request returning a [JSON file](https://realestate-prediction-dilsad.herokuapp.com/predict) which shows the expected user input format.<br>              
-        POST request that receives the data of a house in JSON format.<br>
+ 3. POST request that receives the data of a house in JSON format.<br>
         {
     "data": {"postcode": 1000, "kitchen_type": "Installed", "bedroom": 3, "building_condition": "As new", "furnished": "No", 
     "terrace": "No", "garden": "Yes", "surface_plot": 200, "living_area": 150, "property-type": "APARTMENT"}
         }
+        
+    
 
 
 
