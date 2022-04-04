@@ -65,9 +65,9 @@ python app.py
         
  #### Sample output for error
         {
-        "errors": {"kitchen_type": "unexpected value; permitted: 'Not installed', 'Semi equipped', 'Equipped'"},
+         "errors": {"kitchen_type": "unexpected value; permitted: 'Not installed', 'Semi equipped', 'Equipped'"},
          "prediction": null
-         }
+        }
         
  #### Sample output for prediction
        {
