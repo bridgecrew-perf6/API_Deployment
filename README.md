@@ -1,5 +1,7 @@
 # API_Deployment
-API deployment for house price prediction
+This API provides predictions from a machine learning model for the real estates in Belgium. Once the app runs the model returns the predicted price based on given features.
+
+The model is also deployed in Heroku in order to be used by web-devolopers to create website around it.
 
 ## Project Guidelines
 
@@ -18,3 +20,16 @@ API deployment for house price prediction
 - [X]  [Pandas](https://pandas.pydata.org/) : A fast, powerful, flexible and easy to use open source data analysis and manipulation tool
 - [X]  [Docker](https://www.docker.com/) : A container platform for rapid app/microservices development and delivery.
 - [X]  [Heroku](https://www.heroku.com/) : A cloud platform that lets developers build, deliver, monitor and scale apps 
+
+## Project Division:
+
+4 main components of this project:
+
+- model --> 
+  > model.py: This file contains a scikit-learn model which was trained with the data which was scrapped from Immoweb in February 2022. The model saved with joblib for deployment purposes.
+
+- preprocessing --> 
+  > validator.py : This file checks user input whether it is provided in the correct format. All validation process is done with the help of Pydantic library.
+  > cleaning_data.py : This file preprocess the user input, makes sure that the user give the correct data type and filled in the required features in order to predict the price.
+    app.py : This file has the Flask API, once its run, it will receive the user input as a json file, convert it to dataframe, and fit it to the presaved model and return a prediction price. GET methods that were defined as a route will return the expected inputs and data types from the user.
+
