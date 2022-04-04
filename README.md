@@ -16,5 +16,5 @@ API deployment for house price prediction
 - [X]  [Numpy](https://numpy.org/) : The fundamental package for scientific computing with Python
 - [X]  [Scikit-Learn](https://scikit-learn.org/stable/index.html) : Machine Learning Library
 - [X]  [Pandas](https://pandas.pydata.org/) : A fast, powerful, flexible and easy to use open source data analysis and manipulation tool
-- [X]  [Docker]
-- [X]  [Heroku]
+- [X]  [Docker](https://www.docker.com/) : A container platform for rapid app/microservices development and delivery.
+- [X]  [Heroku](https://www.heroku.com/) : A cloud platform that lets developers build, deliver, monitor and scale apps 
