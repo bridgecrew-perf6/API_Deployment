@@ -26,11 +26,30 @@ The model is also deployed in Heroku in order to be used by web-devolopers to cr
 4 main components of this project:
 
 - model --> 
-  > model.py: This file contains a scikit-learn model which was trained with the data which was scrapped from Immoweb in February 2022. The model saved with joblib for deployment purposes.
+> - model.py: This file contains a scikit-learn model which was trained with the data which was scrapped from Immoweb in February 2022. The model saved with joblib for deployment purposes.
 
 - preprocessing --> 
-  > - validator.py : This file checks user input whether it is provided in the correct format. All validation process is done with the help of Pydantic library.<br>
-  > - cleaning_data.py : This file preprocess the user input, makes sure that the user give the correct data type and filled in the required features in order to predict the price.
+> - validator.py : This file checks user input whether it is provided in the correct format. All validation process is done with the help of Pydantic library.<br>
+> - cleaning_data.py : This file preprocess the user input and makes sure that the data is exactly in the same format with which is used in the scikit -learn model.
 
-    app.py : This file has the Flask API, once its run, it will receive the user input as a json file, convert it to dataframe, and fit it to the presaved model and return a prediction price. GET methods that were defined as a route will return the expected inputs and data types from the user.
+- prediction -->
+> - prediction.py : It runs our presaved model and provides a prediction for the user input. 
+
+
+
+In your app.py file, create a Flask API that contains:
+
+    A route at / that accept:
+        GET request and return "alive" if the server is alive.
+    A route at /predict that accept:
+        POST request that receives the data of a house in JSON format.
+        GET request returning a string to explain what the POST expect (data and format).
+
+
+- app.py : Contains 2 routes. This file creates a Flask API for providing price prediction. It containes 2 routes. Once its run, it receives the user input as JSON data. After that, this data goes through the validadion and preprocessing process and finally it fits the preprocessed data in the presaved model and displays the prediction. 
+> - the route('/') accepts:
+        GET request and returns an [API documentation](https://realestate-prediction-dilsad.herokuapp.com/) on  Heroku.
+> - the route ('/predict') accepts:
+        POST request that receives the data of a house in JSON format.
+        GET request returning a [JSON file](https://realestate-prediction-dilsad.herokuapp.com/predict) which shows the expected user input format.
 
