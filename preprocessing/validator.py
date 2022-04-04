@@ -2,9 +2,11 @@ from enum import Enum
 from pydantic import BaseModel, Field, PositiveInt, ValidationError, validator
 from typing import Literal, Optional, Union
 
+
 def input_validator(json_):
     """
     This function check user input and raises error if the input is not expected format
+    It takes Json data as parameter which comes from API/request.
     """
 
     class Feature(str, Enum):
@@ -45,10 +47,10 @@ def input_validator(json_):
         living_area: Union[float, int] = Field(
             ..., gt=0, description="The size in sqm must be greater than zero"
         )
-        surface_plot: Union[float, int] = Field(None, gt=0, description="The size in sqm must be greater than zero"
+        surface_plot: Union[float, int] = Field(
+            None, gt=0, description="The size in sqm must be greater than zero"
         )
         property_type: Type = Field(...)
-
 
     try:
         Model(**json_)

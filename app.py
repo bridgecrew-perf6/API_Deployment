@@ -19,6 +19,7 @@ def home():
 @app.route("/predict", methods=["GET"])
 def input_format():
 
+    #Open the template file to indicate user input requirements
     with open("preprocessing/template.json") as file:
         output = json.load(file)
 
@@ -28,6 +29,10 @@ def input_format():
 
 @app.route("/predict", methods=["POST"])
 def respond():
+    """This function gets the user input in Json format and put it in
+    validator and preporecessing procedure and returns error if the input is 
+    not in the correct format or predicted price if the format is correct."""
+
     json_ = request.get_json().get("data")
     validation = input_validator(json_)
     if validation == "Excellent!":
