@@ -29,8 +29,8 @@ The model is also deployed in Heroku in order to be used by web-devolopers to cr
   > model.py: This file contains a scikit-learn model which was trained with the data which was scrapped from Immoweb in February 2022. The model saved with joblib for deployment purposes.
 
 - preprocessing --> 
-  > validator.py : This file checks user input whether it is provided in the correct format. All validation process is done with the help of Pydantic library.<br>
-  > cleaning_data.py : This file preprocess the user input, makes sure that the user give the correct data type and filled in the required features in order to predict the price.
+  > - validator.py : This file checks user input whether it is provided in the correct format. All validation process is done with the help of Pydantic library.<br>
+  > - cleaning_data.py : This file preprocess the user input, makes sure that the user give the correct data type and filled in the required features in order to predict the price.
 
     app.py : This file has the Flask API, once its run, it will receive the user input as a json file, convert it to dataframe, and fit it to the presaved model and return a prediction price. GET methods that were defined as a route will return the expected inputs and data types from the user.
 
