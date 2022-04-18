@@ -3,6 +3,8 @@ import pandas as pd
 import numpy as np
 import pgeocode
 
+#Open the columns name which were used to train the model
+model_columns = pickle.load(open("model/model_columns.pkl", "rb"))
 
 def preprocess(data_input):
     """This function gets user input after validator proces in Json format, clean it and 
@@ -47,13 +49,10 @@ def preprocess(data_input):
     df["city"] = nomi.query_postal_code(df["postcode"])["community_name"]
 
     #Drop the postcode column as the model use it as city name
-    df.drop(columns=["postcode"])
+    df = df.drop(columns=["postcode"])
 
     #Converting the categorical values to numerical values with dummies method
     df = pd.get_dummies(df, columns=["property_type", "city"])
-
-    #Open the columns name which were used to train the model
-    model_columns = pickle.load(open("model/model_columns.pkl", "rb"))
 
     #Compare the the features in the user input and the model columns name
     df = df.reindex(columns=model_columns, fill_value=0)
